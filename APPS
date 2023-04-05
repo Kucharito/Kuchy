@@ -1,0 +1,245 @@
+#include "mbed.h"
+
+DigitalOut g_led_PTC1(PTC0);
+
+DigitalOut g_led_PTC3(PTC1);
+
+DigitalOut g_led_PTC5(PTC3);
+
+DigitalOut pta1(PTA1);
+DigitalOut pta2(PTA2);
+
+DigitalOut led[] = {PTC0,PTC1,PTC2,PTC3,PTC4,PTC5,PTC7,PTC8};
+DigitalOut RGB1[] = {PTB2, PTB3, PTB9};
+
+int color = 0;
+
+DigitalIn but1(PTC9);
+DigitalIn but2(PTC10);
+DigitalIn but3(PTC11);
+DigitalIn but4(PTC12);
+
+Ticker r1;
+
+Ticker t1;
+
+int procent = 100;
+int procentr = 100;
+
+std::chrono::milliseconds l_tout(1);
+
+std::chrono::milliseconds l_tout2(20);
+
+int i = 0;
+int forbut2 = 0;
+int forbut3 = 0;
+int forbut4 = 0;
+
+void rlight(){
+ static int ticks = 0;
+
+  int32_t period = 30;
+
+  int time = period * procentr / 100;
+
+  led[i] = (ticks < time) ? 1 : 0;
+
+  ticks++;
+
+  if (ticks >= period) // end of periode?
+
+  {
+
+    ticks = 0; // start periode again
+
+  }
+}
+
+
+void light() {
+
+ static int ticks = 0;
+
+ int32_t period = 30;
+
+ int time = period * procent / 100;
+
+ if (color == 0) {
+  RGB1[0] = (ticks < time) ? 1 : 0;
+  RGB1[1] = (ticks < time) ? 1 : 0;
+  RGB1[2] = (ticks < time) ? 1 : 0;
+ }
+
+ if (color == 1) {
+   RGB1[0] = (ticks < time) ? 1 : 0;
+   RGB1[1] = 0;
+   RGB1[2] = (ticks < time) ? 1 : 0;
+ }
+ if (color == 2) {
+   RGB1[0] = 0;
+   RGB1[1] = 0;
+   RGB1[2] = (ticks < time) ? 1 : 0;
+ }
+ if (color == 3) {
+   RGB1[0] = 0;
+   RGB1[1] = (ticks < time) ? 1 : 0;
+   RGB1[2] = (ticks < time) ? 1 : 0;
+ }
+ if (color == 4) {
+   RGB1[0] = 0;
+   RGB1[1] = (ticks < time) ? 1 : 0;
+   RGB1[2] = 0;
+ }
+ if (color == 5) {
+   RGB1[0] = (ticks < time) ? 1 : 0;
+   RGB1[1] = 0;
+   RGB1[2] = 0;
+ }
+ if (color == 6) {
+   RGB1[0] = (ticks < time) ? 1 : 0;
+   RGB1[1] = (ticks < time) ? 1 : 0;
+   RGB1[2] = 0;
+  }
+ ticks++;
+
+ if (ticks >= period) // end of periode?
+
+ {
+
+   ticks = 0; // start periode again
+
+ }
+
+}
+
+
+int main() {
+
+ r1.attach(rlight, l_tout);
+ t1.attach(light, l_tout);
+
+
+ while (true)
+{
+//  color++;
+//  if (color == 7) {
+//   color = 0;
+//  }
+
+  //wait_us(2500000);
+
+ if ((forbut4 % 2) - 1 == 0)
+ {
+  if(!but1) //jas pro rgb
+      {
+     if (procent == 0) {
+          procent = 100;
+         }
+           else {
+            procent -= 5;
+           }
+
+     while(!but1);
+      }
+ }
+ else
+ {
+  if(!but1) //jas pro red
+      {
+     if (procentr == 0) {
+          procentr = 100;
+         }
+        else {
+         procentr -= 5;
+        }
+
+     while(!but1);
+      }
+ }
+
+ if(!but2) //kroky a reset
+      {
+     forbut2++;
+
+     i++;
+     led[i-1] = 0;
+     if (i == 8) i = 0;
+
+     if(forbut2 == 2)
+     {
+      procent = 50;
+      procentr = 50;
+     }
+
+     while(!but2);
+      }
+
+ if(!but3) //blikani
+      {
+    forbut3++;
+    if (forbut3 % 2 == 0)
+    {
+     r1.detach();
+     r1.attach(rlight, l_tout);
+     t1.detach();
+     t1.attach(light, l_tout);
+    }
+
+    if ((forbut3 - 1) % 2 == 0)
+    {
+     r1.detach();
+     r1.attach(rlight, l_tout2);
+     t1.detach();
+     t1.attach(light, l_tout2);
+    }
+
+     while(!but3);
+      }
+
+ if(!but4) //vyber rgb
+     {
+          forbut4++;
+
+    while(!but4);
+     }
+
+
+ //indikace
+ if (forbut2 == 2) //reset
+ {
+  pta1 = 1;
+  pta2 = 1;
+ }
+ else
+ {
+  pta1 = 0;
+  pta2 = 0;
+ }
+
+ if ((forbut3 % 2) - 1 == 0) //blikani
+ {
+  pta1 = 1;
+  pta2 = 0;
+ }
+ else
+ {
+  pta1 = 0;
+  pta2 = 0;
+ }
+
+
+ if ((forbut4 % 2) - 1 == 0) //vyber rgb
+ {
+  pta1 = 0;
+  pta2 = 1;
+ }
+ else
+ {
+  pta1 = 0;
+  pta2 = 0;
+ }
+
+
+ }
+
+}
