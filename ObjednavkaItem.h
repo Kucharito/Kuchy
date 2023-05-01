@@ -1,42 +1,47 @@
 #pragma once
 
 #include "Zajazd.h"
-using namespace std;
 
-class ObjednavkaItem
+#include <iostream>
+class OrderItem
 {
 private:
-    int Id;
-    AbstractObjednanyZajazd* Zajazd;
-    int Count;
+    int id;
+    AbstractObjednanyZajazd* product;
+    int count;
 
 public:
-    ObjednavkaItem(int id, AbstractObjednanyZajazd* zajazd, int count)
-    {
-        this->Id = id;
-        this->Zajazd = zajazd;
-        this->Count = count;
-    }
-    ~ObjednavkaItem()
-    {
+    OrderItem(int id, AbstractObjednanyZajazd* product, int count);
+    ~OrderItem();
 
-    }
-    int getID()
-    {
-        return Id;
-    }
-    AbstractObjednanyZajazd* getZajazd()
-    {
-        return Zajazd;
-    }
-    int getCount()
-    {
-        return Count;
-    }
-    void vypisObjednavkaItem()
-    {
-        Zajazd->vypis();
-        cout << "id objednavky je " << Id << "\n";
-        cout << "pocet objednavok je " << Count << "\n";
-    }
+    AbstractObjednanyZajazd* GetProduct();
+    int GetCount();
+
+    void Print();
 };
+OrderItem::OrderItem(int id, AbstractObjednanyZajazd* product, int count)
+{
+    this->id = id;
+    this->product = product;
+    this->count = count;
+}
+OrderItem::~OrderItem()
+{
+
+}
+
+AbstractObjednanyZajazd* OrderItem::GetProduct()
+{
+    return product;
+}
+int OrderItem::GetCount()
+{
+    return count;
+}
+
+void OrderItem::Print()
+{
+    cout << "Item number " << id << ": ";
+    product->vypis();
+    cout << "quantity: " << count << endl;
+}
