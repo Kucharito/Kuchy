@@ -1,5 +1,7 @@
 #pragma once
 
+
+#include <iostream>
 #include <string>
 using namespace std;
 class AbstractObjednanyZajazd
@@ -36,9 +38,9 @@ public:
     virtual void vypis()
     {
         cout << this->typDovolenky() << endl;
-        cout << " Catalog id: " << this->id_Zajazdu << endl;
-        cout << " Nazov: " << this->CenaZajazdu << endl;
-        cout << " Cena: " << this->NazovZajazdu << endl;
+        cout << " Catalog id---> " << this->id_Zajazdu << endl;
+        cout << " Nazov---> " << this->NazovZajazdu << endl;
+        cout << " Cena--->: " << this->CenaZajazdu << endl;
     }
 };
 
@@ -50,7 +52,7 @@ private:
     bool AllInclusive;
 
 public:
-    LetnaDovolenka(int id_Zajazdu,float CenaZajazdu,string NazovZajazdu,string nazovplaze, bool drinky, bool allinclusive) : AbstractObjednanyZajazd(id_Zajazdu, CenaZajazdu, NazovZajazdu)
+    LetnaDovolenka(int id_Zajazdu, float CenaZajazdu, string NazovZajazdu, string nazovplaze, bool drinky, bool allinclusive) : AbstractObjednanyZajazd(id_Zajazdu, CenaZajazdu, NazovZajazdu)
     {
         this->Nazovplaze = nazovplaze;
         this->Drinky = drinky;
@@ -63,7 +65,7 @@ public:
 
     string typDovolenky()
     {
-        return "Letna dovolenka";
+        return "\tLetna dovolenka";
     }
     string getNazovplaze()
     {
@@ -80,9 +82,9 @@ public:
     void vypis()
     {
         AbstractObjednanyZajazd::vypis();
-        cout << " Drinky " << (this->Drinky ? "Su v cene" : "Nie su v cene") << endl;
-        cout << " AllInclusive" << (this->AllInclusive ? "Ano" : " Nie ") << endl;
-        cout << "Nazovplaze" << this->Nazovplaze << "\n";
+        cout << " Drinky " << (this->Drinky ? "--->Su v cene" : "---> Nie su v cene") << endl;
+        cout << " AllInclusive" << (this->AllInclusive ? "--->Ano" : "--->Nie ") << endl;
+        cout << " Nazovplaze--->" << this->Nazovplaze << "\n";
     }
 
 };
@@ -93,7 +95,7 @@ private:
     bool PozicovnaLyzi;
     int PocetLanoviek;
 public:
-    ZimnaDovolenka(int id_Zajazdu, float CenaZajazdu, string NazovZajazdu,string nazovstrediska, bool pozicovnalyzi, int pocetlanoviek) : AbstractObjednanyZajazd(id_Zajazdu, CenaZajazdu, NazovZajazdu)
+    ZimnaDovolenka(int id_Zajazdu, float CenaZajazdu, string NazovZajazdu, string nazovstrediska, bool pozicovnalyzi, int pocetlanoviek) : AbstractObjednanyZajazd(id_Zajazdu, CenaZajazdu, NazovZajazdu)
     {
         this->NazovStrediska = nazovstrediska;
         this->PozicovnaLyzi = pozicovnalyzi;
@@ -105,7 +107,7 @@ public:
     }
     string typDovolenky()
     {
-        return "Zimna dovolenka";
+        return "\tZimna dovolenka";
     }
     string getStredisko()
     {
@@ -122,8 +124,8 @@ public:
     void vypis()
     {
         AbstractObjednanyZajazd::vypis();
-        cout << "Nazov strediska je " << this->NazovStrediska << "\n";
-        cout << " Pozicovna lyzi je v stredisku  " << (this->PozicovnaLyzi ? "Ano " : "Nie") << endl;
-        cout << "Pocet lanoviek v stredisko " << this->NazovStrediska << " je " << this->PocetLanoviek << "\n";
+        cout << "Nazov strediska je --->" << this->NazovStrediska << "\n";
+        cout << " Pozicovna lyzi je v stredisku ---> " << (this->PozicovnaLyzi ? "--->Ano " : "--->Nie") << endl;
+        cout << "Pocet lanoviek v stredisko --->" << this->NazovStrediska << " je --->" << this->PocetLanoviek << "\n";
     }
 };

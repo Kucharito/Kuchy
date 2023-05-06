@@ -46,7 +46,7 @@ public:
 		cout << "vek je " << vek << "\n";
 	}
 };
-class pisak : public Osoba
+class Majitel : public Osoba
 {
 private:
 	string adresa;
@@ -54,21 +54,21 @@ private:
 	string nazovpartnera;
 	int kontrakt;
 public:
-	pisak(string meno, string priezvisko, int vek, string adresa, float vyplata, string nazovpartnera, int kontrakt) : Osoba(meno, priezvisko, vek)
+	Majitel(string meno, string priezvisko, int vek, string adresa, float vyplata, string nazovpartnera, int kontrakt) : Osoba(meno, priezvisko, vek)
 	{
 		this->adresa = adresa;
 		this->vyplata = vyplata;
 		this->nazovpartnera = nazovpartnera;
 		this->kontrakt = kontrakt;
 	}
-	pisak(string meno, string priezvisko, int vek, string adresa, float vyplata) :Osoba(meno, priezvisko, vek)
+	Majitel(string meno, string priezvisko, int vek, string adresa, float vyplata) :Osoba(meno, priezvisko, vek)
 	{
 		this->vyplata = vyplata;
 		this->adresa = adresa;
 		this->nazovpartnera = " Ziaden";
 		this->kontrakt = NULL;
 	}
-	virtual ~pisak()
+	virtual ~Majitel()
 	{
 
 	}
@@ -97,7 +97,7 @@ public:
 		Osoba::vypis();
 		cout << "toto je adresa " << adresa << "\n";
 		cout << "Toto je vyplata " << vyplata << "\n";
-		cout << "Nazov partnera " << nazovpartnera << "\n";
-		cout << "Pocet rokov na ako dlho je podpisany kontrakt s partnerom: " << kontrakt << "\n";
+		cout << "Nazov sekretarky " << nazovpartnera << "\n";
+		cout << "Pocet rokov na ako dlho je podpisany kontrakt so sekretarkou: " << kontrakt << "\n";
 	}
 };
