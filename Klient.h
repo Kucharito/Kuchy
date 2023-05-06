@@ -10,7 +10,7 @@ class Klient
 {
 protected:
     int id;
-    vector<Order*> orders;
+    vector<Objednavka*> orders;
     static int objektCount;
 public:
     Klient(int id);
@@ -20,7 +20,7 @@ public:
 
     int GetId();
     static int GetObjectsCount();
-    void AddOrder(Order* order);
+    void AddOrder(Objednavka* order);
     int CalculatePrice();
     void PrintOrders();
 
@@ -41,7 +41,7 @@ int Klient::GetId()
     return id;
 }
 
-void Klient::AddOrder(Order* order)
+void Klient::AddOrder(Objednavka* order)
 {
     orders.push_back(order);
 }
@@ -131,9 +131,9 @@ string NeregistrovanyKlient::GetEmail()
 void NeregistrovanyKlient::Print()
 {
     Klient::Print();
-    cout << " first name: " << this->firstName << endl;
-    cout << " last name: " << this->lastName << endl;
-    cout << " email: " << this->email << endl;
+    cout << " Meno " << this->firstName << endl;
+    cout << " Priezvisko " << this->lastName << endl;
+    cout << " Email: " << this->email << endl;
 
 }
 

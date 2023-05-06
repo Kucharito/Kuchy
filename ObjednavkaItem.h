@@ -41,7 +41,7 @@ int OrderItem::GetCount()
 
 void OrderItem::Print()
 {
-    cout << "Item number " << id << ": ";
+    cout << "Polozka cislo " << id << ": ";
     product->vypis();
-    cout << "quantity: " << count << endl;
+    cout << "pocet: " << count << endl;
 }

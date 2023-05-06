@@ -5,15 +5,15 @@
 
 #include <iostream>
 using namespace std;
-class Order
+class Objednavka
 {
 private:
     int id;
     vector<OrderItem*> items;
 
 public:
-    Order(int id);
-    ~Order();
+    Objednavka(int id);
+    ~Objednavka();
 
     void AddItem(int id, AbstractObjednanyZajazd* product, int count);
     void RemoveItem(int id);
@@ -21,11 +21,11 @@ public:
     int CalculatePrice();
     void Print();
 };
-Order::Order(int id)
+Objednavka::Objednavka(int id)
 {
     this->id = id;
 }
-Order::~Order()
+Objednavka::~Objednavka()
 {
     for (auto&& item : items)
     {
@@ -34,12 +34,12 @@ Order::~Order()
 
 }
 
-void Order::AddItem(int id, AbstractObjednanyZajazd* product, int count)
+void Objednavka::AddItem(int id, AbstractObjednanyZajazd* product, int count)
 {
     OrderItem* newItem = new OrderItem(id, product, count);
     items.push_back(newItem);
 }
-void Order::RemoveItem(int id)
+void Objednavka::RemoveItem(int id)
 {
     for (int i = 0; i < items.size(); i++)
     {
@@ -48,7 +48,7 @@ void Order::RemoveItem(int id)
     }
 }
 
-int Order::CalculatePrice()
+int Objednavka::CalculatePrice()
 {
     int price = 0;
 
@@ -59,20 +59,20 @@ int Order::CalculatePrice()
 
     return price;
 }
-void Order::Print()
+void Objednavka::Print()
 {
-    cout << "Order number: " << id << endl << endl;
-    cout << "Items: " << endl << endl;
+    cout << "Objednavka cislo: " << id << endl << endl;
+    cout << "Polozky: " << endl << endl;
 
     for (auto&& item : items)
     {
 
-        cout << "_____________" << endl;
+        cout << "" << endl;
         item->Print();
         cout << endl;
     }
 
-    cout << "_____________" << endl;
+    cout << "" << endl;
     cout << "Total price: " << CalculatePrice() << endl;
 
 }

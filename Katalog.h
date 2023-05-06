@@ -4,17 +4,16 @@
 #include <vector>
 #include <iostream>
 using namespace std;
-class ProductCatalog
+class Katalog
 {
 private:
     int capacity;
     int productCount;
-
     vector<AbstractObjednanyZajazd*> products;
 
 public:
-    ProductCatalog(int capacity);
-    ~ProductCatalog();
+    Katalog(int capacity);
+    ~Katalog();
 
     void AddProduct(AbstractObjednanyZajazd* product);
 
@@ -22,11 +21,11 @@ public:
 };
 
 
-ProductCatalog::ProductCatalog(int capacity)
+Katalog::Katalog(int capacity)
 {
     this->capacity = capacity;
 }
-ProductCatalog::~ProductCatalog()
+Katalog::~Katalog()
 {
     for (auto&& product : products)
     {
@@ -36,7 +35,7 @@ ProductCatalog::~ProductCatalog()
     productCount = 0;
 }
 
-void ProductCatalog::AddProduct(AbstractObjednanyZajazd* product)
+void Katalog::AddProduct(AbstractObjednanyZajazd* product)
 {
     if (productCount >= capacity)
         return;
@@ -44,7 +43,7 @@ void ProductCatalog::AddProduct(AbstractObjednanyZajazd* product)
     productCount++;
 }
 
-void ProductCatalog::Print()
+void Katalog::Print()
 {
     for (auto&& product : products)
     {
