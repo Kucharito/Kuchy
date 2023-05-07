@@ -1,0 +1,161 @@
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <unordered_set>
+#include <unordered_map>
+#include <queue>
+#include <stack>
+#include "LoadGraph.h"
+#include "LargestComponent.h"
+#include "OtvorTroj.h"
+#include "Triplets.h"
+
+using namespace std;
+
+// Graf je ulozeni v pamati v podobe vektoru hran (pary vrcholov)
+
+// Nacte grafu zo suboru
+/*vector<pair<int, int>> loadGraphFromFile(string filename) 
+{
+    vector<pair<int, int>> edges;
+    ifstream file(filename);
+    if(file.is_open())
+    {
+        int a, b;
+        while (file >> a >> b) 
+        {
+            edges.push_back(make_pair(a, b));
+        }
+        file.close();
+    }
+    else
+    {
+        cout<<"File could not be opened\n";
+        exit (-1);
+    }
+    return edges;
+}
+
+// hladanie najvacsej komponenty
+vector<pair<int,int>> largestComponent(vector<pair<int,int>>& edges) 
+{
+    unordered_map<int, unordered_set<int>> adjList;
+    for (auto &e: edges) 
+    {
+        adjList[e.first].insert(e.second);
+        adjList[e.second].insert(e.first);
+    }//matica susednosti
+
+    vector<pair<int,int>> largest_comp;
+    unordered_map<int, bool> visited;
+    stack<int> s;
+    vector<pair<int,int>> temp_comp;
+
+    for (auto base: adjList) 
+    {
+        if (visited[base.first]) 
+        {
+            continue;
+        }
+        s.push(base.first);
+        while (!s.empty()) 
+        {
+            int v = s.top();
+            s.pop();
+            if (!visited[v]) 
+            {
+                visited[v] = true;
+                for (auto w: adjList[v]) 
+                {
+                    if (!visited[w]) 
+                    {
+                        s.push(w);
+                        temp_comp.emplace_back(v, w);// rovnake ako push_back , skoro, automaticky vytovri strukturu 
+                    }
+                }
+            }
+        }
+        if (temp_comp.size() > largest_comp.size()) 
+        {
+            largest_comp = temp_comp;
+        }
+        temp_comp.clear();
+    }
+    return largest_comp;
+}
+
+// funkcia pre pocitanie otvorenych trojuholnikov
+int countT(vector<pair<int, int>> &edges) 
+{
+    // zoznam susedov pre kazdy vrchol (hesovacia tabulka {key:id vrcholu, value:zoznam susedov})
+    unordered_map<int, unordered_set<int>> adjList;
+    for (auto &e: edges) 
+    {
+        adjList[e.first].insert(e.second);
+        adjList[e.second].insert(e.first);
+    }
+
+    int count = 0;
+    for (auto base: adjList) 
+    {
+        if (base.second.size() < 2) 
+        { // preskocime vrcholy s menej ako 2 susedmi
+            continue;
+        }
+        for (auto v: base.second) 
+        {
+            for (auto w: base.second) 
+            {
+                if (v != w) 
+                { // na zaciatku je v = w
+                    count++;
+                }
+            }
+        }
+    }
+
+    return count / 2; // kazdy trojuholnik je pocitany dvakrat
+}
+
+// funkcia pre pocitanie uzavretych trojuholnikov
+int countTriplets(vector<pair<int, int>> edges) 
+{
+    // zoznam susedov pre kazdy vrchol (hesovacia tabulka {key:id vrcholu, value:zoznam susedov})
+    unordered_map<int, unordered_set<int>> adjList;
+    for (auto &e: edges) 
+    {
+        adjList[e.first].insert(e.second);
+        adjList[e.second].insert(e.first);
+    }
+
+    int count = 0;
+    for (auto base: adjList) 
+    {
+        if (base.second.size() < 2) 
+        { // preskocime vrcholy s menej ako 2 susedmi
+            continue;
+        }
+        for (auto e: base.second) 
+        {
+            for (auto f: base.second) 
+            {
+                // porovna ci susedia e a f su susedmi
+                if (e != f && adjList[e].count(f) && adjList[f].count(base.first)) 
+                {
+                    count++;
+                }
+            }
+        }
+    }
+    return count / 6; // kazdy trojuholnik je pocitany 6 krat
+}
+*/
+int main() 
+{
+    vector<pair<int, int>> edges = loadGraphFromFile("Graf1.txt");
+    auto largest = largestComponent(edges);
+    auto a = countTriplets(largest);
+    auto b = countT(largest);
+    cout<< 3*a/ (float)b <<endl;
+    return 0;
+}
